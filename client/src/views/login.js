@@ -2,9 +2,13 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 
-function Register() {
+function Login() {
 
   const history = useHistory()
+
+  const toRegis = () =>{
+    history.push('/register')
+  }
 
   const [formData, setFormData] = useState({
     email: "",
@@ -32,7 +36,7 @@ function Register() {
       }
     }).then((response) => {
       console.log(response.data)
-      history.push('/')
+      history.push('/login')
     }).catch((err) => {
       console.log(err)
     })
@@ -55,21 +59,17 @@ function Register() {
                 <div className="row">
                   <div className="col-lg-10 col-xl-7 mx-auto">
                     <h6 className="display-6">Welcome To vOffice Indonesia</h6>
-                    <h6 className="text-muted mb-4">Please Register here</h6>
+                    <h6 className="text-muted mb-4">Login Page</h6>
                     <form>
-                      <div className="form-group mb-3">
-                        <input  type="text" placeholder="Name Company" required className="form-control rounded-pill border-0 shadow-sm px-4 text-primary" name="username" onChange={changeInput}/>
-                      </div>
                       <div className="form-group mb-3">
                         <input id="inputEmail" type="email" placeholder="Email address" required autofocus="" className="form-control rounded-pill border-0 shadow-sm px-4" name="email" onChange={changeInput}/>
                       </div>
                       <div className="form-group mb-3">
                         <input id="inputPassword" type="password" placeholder="Password" required className="form-control rounded-pill border-0 shadow-sm px-4 text-primary" name="password" onChange={changeInput} />
                       </div>
-                      <div className="form-group mb-3">
-                        <input  type="date" placeholder="Since at" required className="form-control rounded-pill border-0 shadow-sm px-4 text-primary" name="birth" onChange={changeInput} />
-                      </div>
-                      <button type="submit" className="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Register</button>
+                      <button type="submit" className="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Login</button>
+                      <div className="text-center d-flex justify-content-between mt-4"><p>Have an account ?<p className="font-italic text-muted" color="blue" onClick={toRegis}>
+                        <u>Register here</u></p></p></div>
                     </form>
                   </div>
                 </div>
@@ -86,4 +86,4 @@ function Register() {
 }
 
 
-export default Register
+export default Login
