@@ -58,6 +58,7 @@ class UserController{
         email: newUser.email,
         msg: 'User Created'
       }
+      console.log(newUser)
       res.status(201).json(obj)
     }).catch(err => {
       next(err)

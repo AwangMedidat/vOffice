@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 function Register() {
 
@@ -16,31 +16,41 @@ function Register() {
   const changeInput = (evt) => {
     // console.log(evt.target.value)
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
-
   }
-  const regis = (e) => {
+  
+  function regis  (e) {
     e.preventDefault()
     // console.log(formData.email)
-    axios({
-      url:'/users/register',
-      method: 'POST',
-      data: {
-        email: formData.email,
-        password: formData.password,
-        username: formData.username,
-        birth: formData.birth
-      }
-    }).then((response) => {
-      console.log(response.data)
-      history.push('/')
-    }).catch((err) => {
-      console.log(err)
-    })
+  
+    fetch('http://localhost:3001/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          username: formData.username,
+          birth: formData.birth
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data)
+        Swal.fire({
+          icon: 'success',
+          title: "Thanks for Register",
+          text: `With Email ${data.email}`,
+          showConfirmButton: true
+        })
+        history.push('/')
+      })
+      .catch(err => console.error('Error: ', err))
   }
 
 
   return (
-    <form onSubmit={regis}>
+    <form>
       <div className="container-fluid">
         <div className="row no-gutter">
 
@@ -69,7 +79,7 @@ function Register() {
                       <div className="form-group mb-3">
                         <input  type="date" placeholder="Since at" required className="form-control rounded-pill border-0 shadow-sm px-4 text-primary" name="birth" onChange={changeInput} />
                       </div>
-                      <button type="submit" className="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Register</button>
+                      <button type="submit" className="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" onClick={regis}>Register</button>
                     </form>
                   </div>
                 </div>
